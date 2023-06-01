@@ -43,6 +43,11 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel3.setText("Contraseña");
 
         btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
 
@@ -92,6 +97,18 @@ public class LoginForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        // TODO add your handling code here:
+        String usuario = txtUsername.getText();
+        String contraseña = txtContraseña.getText();
+
+        if (usuario.equals("admin") && contraseña.equals("123")) {
+            System.out.println("Inicio de sesión exitoso");
+        } else { 
+            System.out.println("Inicio de sesión fallido");
+        }
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
      * @param args the command line arguments
