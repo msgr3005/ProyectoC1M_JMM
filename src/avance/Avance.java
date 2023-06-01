@@ -17,7 +17,7 @@ public class Avance {
         // TODO code application logic here
         LoginForm loginForm= new LoginForm();
         loginForm.setVisible(true);
-        
+        //"Hola mundo";
     }
     
 }
