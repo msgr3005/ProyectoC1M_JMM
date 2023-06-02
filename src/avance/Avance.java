@@ -16,8 +16,8 @@ public class Avance {
     public static void main(String[] args) {
         // TODO code application logic here
         LoginForm loginForm= new LoginForm();
+        loginForm.setVisible(true);
         
-        //hola
     }
     
 }
