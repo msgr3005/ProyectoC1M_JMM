@@ -3,21 +3,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package avance;
-
+import Repository.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import RegistroInterfaz.*;
 
 /**
  *
  * @author MAURICIO
  */
 public class LoginForm extends javax.swing.JFrame {
-
+    RepositorioMySQL repo = new RepositorioMySQL();
+   
     /**
      * Creates new form LoginForm
      */
     public LoginForm() {
         initComponents();
     }
+
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,6 +42,7 @@ public class LoginForm extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
         txtContraseña = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
+        btnRegistrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -56,14 +63,22 @@ public class LoginForm extends javax.swing.JFrame {
                 btnIngresarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, -1, -1));
+        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, -1, -1));
 
         btnSalir.setText("Salir");
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, -1, -1));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, -1, -1));
         getContentPane().add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(252, 176, 101, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fotologin.png"))); // NOI18N
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, 160, 180));
+
+        btnRegistrar.setText("Registrarse");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -72,13 +87,31 @@ public class LoginForm extends javax.swing.JFrame {
         // TODO add your handling code here:        
         String user = txtUsername.getText();
         String pass= new String(txtContraseña.getPassword());
-        if (user.equals("admin") && pass.equals("123")) {
+        //Usuario usuario = new Usuario(user,pass);
+        //repo.agregar(usuario);
+        List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+        listaUsuarios = repo.listar();
+        for(int i=0;i<listaUsuarios.size();i++){
+            if(user.equals(listaUsuarios.get(i).getUsername()) && pass.equals(listaUsuarios.get(i).getPassword())){
+                JOptionPane.showMessageDialog(this, "Inicio de sesion exitoso");
+            }else{
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecto");
+            }
+        };
+       
             
-            JOptionPane.showMessageDialog(this, "Inicio de sesion exitoso");
-        } else { 
-            JOptionPane.showMessageDialog(this, "El usuario o contraseña es incorrecto");
-        }
+            
+         
+            
+        
     }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        // TODO add your handling code here:
+        RegistroFormulario registroform = new RegistroFormulario();
+        this.setVisible(false);
+        registroform.setVisible(true);
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,6 +150,7 @@ public class LoginForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
