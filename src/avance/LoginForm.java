@@ -4,10 +4,13 @@
  */
 package avance;
 import Repository.*;
-import java.util.ArrayList;
-import java.util.List;
+
 import javax.swing.JOptionPane;
 import RegistroInterfaz.*;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 /**
  *
@@ -84,20 +87,36 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        // TODO add your handling code here:        
+        // TODO add your handling code here:   
+        
         String user = txtUsername.getText();
         String pass= new String(txtContraseña.getPassword());
-        //Usuario usuario = new Usuario(user,pass);
-        //repo.agregar(usuario);
-        List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-        listaUsuarios = repo.listar();
-        for(int i=0;i<listaUsuarios.size();i++){
+        String comp = repo.ObtenerPassword(user);
+        
+       String md5 = getMD5(pass);
+        if(comp.equals(md5)){
+            JOptionPane.showMessageDialog(this, "Inicio de sesion exitoso");
+        }else{
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecto");
+        }
+  
+        /*try{
+            Connection connection = DriverManager.getConnection(repo.getURL(),repo.getUsuario(),repo.getPassword());
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1,user);
+            statement.executeUpdate();
+            List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+            listaUsuarios = repo.listar();
+            for(int i=0;i<listaUsuarios.size();i++){
             if(user.equals(listaUsuarios.get(i).getUsername()) && pass.equals(listaUsuarios.get(i).getPassword())){
                 JOptionPane.showMessageDialog(this, "Inicio de sesion exitoso");
             }else{
                 JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecto");
             }
-        };
+        }
+        }catch(Exception e){
+            e.printStackTrace();
+        }*/
        
             
             
@@ -159,4 +178,24 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtContraseña;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+    public static String getMD5(String input) {
+        try 
+        {
+            //MessageDigest nos provee funcionalidades para trabajar con algoritmos de encriptacion
+            MessageDigest md = MessageDigest.getInstance("MD5");//Le pasamos como parametro que tipo de algoritmo utilizará
+            byte[] messageDigest = md.digest(input.getBytes());//Convertimos el string en un arreglo de bytes
+            
+            BigInteger number = new BigInteger(1, messageDigest);
+            String hashtext = number.toString(16);
+        //[B@1fe3483
+            while (hashtext.length() < 32) 
+            {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        }
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

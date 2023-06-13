@@ -11,8 +11,10 @@ import java.util.List;
  * @author MAURICIO
  */
 public interface Repository {
+     
     void agregar(Usuario obj);
     void actualizar(Usuario obj1,Usuario obj2);
     void eliminar(Usuario obj);
     List<Usuario> listar();
+    String ObtenerPassword(String comodin);
 }

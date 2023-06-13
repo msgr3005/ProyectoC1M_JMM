@@ -17,6 +17,38 @@ public class RepositorioMySQL implements Repository{
     private String URL= "jdbc:mysql://localhost:3306/"+database;
     private String usuario = "root";
     private String password = "";
+
+    public String getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
     
     
     public RepositorioMySQL(){
@@ -27,16 +59,11 @@ public class RepositorioMySQL implements Repository{
             e.printStackTrace();
         }
     }
-    public void setDataBase(String str){
-        this.database = str;
-    }
-    public String getDataBase(){
-        return this.database;
-    }
+    
     
     public void agregar(Usuario obj) {
-        //falta añadir la tabla
-        String sql = "insert into tbl_usuario(username,password) values(?,?)";
+        
+        String sql = "insert into tbl_(username,password) values(?,MD5(?))";
         try{
             Connection connection = DriverManager.getConnection(URL,usuario,password);
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -78,6 +105,26 @@ public class RepositorioMySQL implements Repository{
            e.printStackTrace();
        }
        return listaUsuario;
+    }
+
+    @Override
+    public String ObtenerPassword(String comodin){
+       String contraseña = "";
+       String sql = "select password from tbl_ where username like ?";
+       try{
+           Connection connection = DriverManager.getConnection(URL,usuario,password);
+           PreparedStatement statement = connection.prepareStatement(sql);
+           statement.setString(1,comodin);
+           ResultSet resultSet = statement.executeQuery();
+           while(resultSet.next()){
+                contraseña = resultSet.getString("password");
+                
+           }
+       }
+       catch(Exception e){
+           e.printStackTrace();
+       }
+       return contraseña;
     }
 
     

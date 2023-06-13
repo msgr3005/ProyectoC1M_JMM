@@ -88,7 +88,7 @@ public class RegistroFormulario extends javax.swing.JFrame {
 
     private void btnConfirmarRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarRActionPerformed
         // TODO add your handling code here:
-         String user = txtUsernameR.getText();
+        String user = txtUsernameR.getText();
         String pass= new String(txtPasswordR.getPassword());
         Usuario usuario = new Usuario(user,pass);
         repo.agregar(usuario);
