@@ -5,17 +5,28 @@
 package BusquedaInterfaz;
 
 import javax.swing.table.DefaultTableModel;
-
+import Repository.*;
+import imagenes.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 /**
  *
  * @author MAURICIO
  */
 public class SearchListForm extends javax.swing.JFrame {
-
+    RepositorioMySQL repo = new RepositorioMySQL();
+    
     /**
      * Creates new form SearchListForm
      */
     public SearchListForm() {
+       
+
         initComponents();
     }
 
@@ -163,7 +174,7 @@ public class SearchListForm extends javax.swing.JFrame {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JPanel jPanel1;

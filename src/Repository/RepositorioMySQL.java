@@ -4,6 +4,7 @@
  */
 package Repository;
 
+import imagenes.ImagenAlmacen;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,39 +19,7 @@ public class RepositorioMySQL implements Repository{
     private String usuario = "root";
     private String password = "";
 
-    public String getDatabase() {
-        return database;
-    }
-
-    public void setDatabase(String database) {
-        this.database = database;
-    }
-
-    public String getURL() {
-        return URL;
-    }
-
-    public void setURL(String URL) {
-        this.URL = URL;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    
+   
     public RepositorioMySQL(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -59,7 +28,6 @@ public class RepositorioMySQL implements Repository{
             e.printStackTrace();
         }
     }
-    
     
     public void agregar(Usuario obj) {
         
@@ -125,6 +93,48 @@ public class RepositorioMySQL implements Repository{
            e.printStackTrace();
        }
        return contraseña;
+    }
+
+    @Override
+    public List<Organizacion> listarOrg() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void agregarImagen(ImagenAlmacen img) {
+        String sql = "insert into tbl_imagen(imagenLogo,imagenReferencial) values(?,?)";
+        try{
+            Connection connection = DriverManager.getConnection(URL,usuario,password);
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setBytes(1,img.getImagenLogo());
+            statement.setBytes(2,img.getImagenReferencial());
+            statement.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public ArrayList cargarImagenes() {
+        ArrayList imagenes = new ArrayList();
+        String sql= "select * from tbl_imagen";
+        try{
+            Connection connection = DriverManager.getConnection(URL,usuario,password);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while(resultSet.next()){
+                ImagenAlmacen mImagen= new ImagenAlmacen();
+                mImagen.setIdImagen(resultSet.getInt("idImagen"));
+               
+                mImagen.setImagenLogo(resultSet.getBytes("imagenLogo"));
+                mImagen.setImagenReferencial(resultSet.getBytes("imagenReferencial"));
+                
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        return imagenes;
     }
 
     
