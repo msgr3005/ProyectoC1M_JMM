@@ -48,6 +48,7 @@ public class LoginForm extends javax.swing.JFrame {
         btnRegistrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Login");
@@ -58,6 +59,12 @@ public class LoginForm extends javax.swing.JFrame {
 
         jLabel3.setText("Contraseña");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 179, -1, -1));
+
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsernameActionPerformed(evt);
+            }
+        });
         getContentPane().add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(252, 96, 108, -1));
 
         btnIngresar.setText("Ingresar");
@@ -98,31 +105,7 @@ public class LoginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Inicio de sesion exitoso");
         }else{
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecto");
-        }
-  
-        /*try{
-            Connection connection = DriverManager.getConnection(repo.getURL(),repo.getUsuario(),repo.getPassword());
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1,user);
-            statement.executeUpdate();
-            List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-            listaUsuarios = repo.listar();
-            for(int i=0;i<listaUsuarios.size();i++){
-            if(user.equals(listaUsuarios.get(i).getUsername()) && pass.equals(listaUsuarios.get(i).getPassword())){
-                JOptionPane.showMessageDialog(this, "Inicio de sesion exitoso");
-            }else{
-                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecto");
-            }
-        }
-        }catch(Exception e){
-            e.printStackTrace();
-        }*/
-       
-            
-            
-         
-            
-        
+        } 
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -131,6 +114,10 @@ public class LoginForm extends javax.swing.JFrame {
         this.setVisible(false);
         registroform.setVisible(true);
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsernameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,6 +165,7 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtContraseña;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+    
     public static String getMD5(String input) {
         try 
         {

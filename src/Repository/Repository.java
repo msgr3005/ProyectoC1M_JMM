@@ -15,11 +15,12 @@ public interface Repository {
      
     void agregar(Usuario obj);
     void agregarImagen(ImagenAlmacen img);
+    void agregarOrganizacion(Organizacion obj);
     void actualizar(Usuario obj1,Usuario obj2);
     void eliminar(Usuario obj);
     List<Usuario> listar();
     String ObtenerPassword(String comodin);
     
-    List<Organizacion> listarOrg();
+    List<Organizacion> listarOrganizacion(String combo,String texto);
     ArrayList cargarImagenes();
 }

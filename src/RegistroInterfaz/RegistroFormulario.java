@@ -60,7 +60,7 @@ public class RegistroFormulario extends javax.swing.JFrame {
 
         jLabel4.setText("Apellido Paterno");
 
-        jLabel5.setText("Apellido Materno");
+        jLabel5.setText("Correo");
 
         jLabel6.setText("Confimar contraseña");
 

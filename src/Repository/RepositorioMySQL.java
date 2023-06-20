@@ -96,9 +96,31 @@ public class RepositorioMySQL implements Repository{
     }
 
     @Override
-    public List<Organizacion> listarOrg() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Organizacion> listarOrganizacion(String combo,String texto) {
+        List<Organizacion> listaOrganizacion = new ArrayList<>();
+       String sql = "select * from tbl_organizacion where ? likes ?";
+       try{
+           Connection connection = DriverManager.getConnection(URL,usuario,password);
+           PreparedStatement statement = connection.prepareStatement(sql);
+           statement.setString(1, combo);
+           statement.setString(2,texto);
+           ResultSet resultSet = statement.executeQuery();
+           while(resultSet.next()){
+               int idOrganizacion = resultSet.getInt("idOrganizacion");
+               String nombre = resultSet.getString("nombre");
+               String descripcion = resultSet.getString("descripcion");
+               byte[] logo = resultSet.getBytes("Logo");
+               byte[] imgRef = resultSet.getBytes("imagenReferencial");
+               Organizacion objOrganizacion = new Organizacion(idOrganizacion,nombre,descripcion,logo,imgRef);
+               listaOrganizacion.add(objOrganizacion);
+           }
+       }
+       catch(Exception e){
+           e.printStackTrace();
+       }
+       return listaOrganizacion;
     }
+    
 
     @Override
     public void agregarImagen(ImagenAlmacen img) {
@@ -135,6 +157,20 @@ public class RepositorioMySQL implements Repository{
             return null;
         }
         return imagenes;
+    }
+
+    @Override
+    public void agregarOrganizacion(Organizacion obj) {
+        String sql = "insert into tbl_organizacion(nombreOrganizacion,descripcion) values(?,?)";
+        try{
+            Connection connection = DriverManager.getConnection(URL,usuario,password);
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1,obj.getNombreOrganizacion());
+            statement.setString(2,obj.getDescripcion());
+            statement.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     
