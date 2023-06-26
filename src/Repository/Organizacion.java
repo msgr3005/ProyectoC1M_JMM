@@ -15,7 +15,9 @@ public class Organizacion {
     private byte [] logo;
     private byte [] imagenReferencial;
     
-
+    public Organizacion(){
+        
+    }
     public Organizacion(String nombreOrganizacion, String descripcion, byte[] logo, byte[] imagenReferencial) {
         this.nombreOrganizacion = nombreOrganizacion;
         this.descripcion = descripcion;

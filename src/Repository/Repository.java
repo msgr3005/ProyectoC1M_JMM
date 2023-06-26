@@ -3,24 +3,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package Repository;
-import imagenes.*;
-import java.util.ArrayList;
+import java.sql.*;
 import java.util.List;
+import javax.swing.JTable;
 
 /**
  *
  * @author MAURICIO
  */
 public interface Repository {
-     
-    void agregar(Usuario obj);
-    void agregarImagen(ImagenAlmacen img);
-    void agregarOrganizacion(Organizacion obj);
-    void actualizar(Usuario obj1,Usuario obj2);
-    void eliminar(Usuario obj);
-    List<Usuario> listar();
-    String ObtenerPassword(String comodin);
+    Connection conectar();
     
-    List<Organizacion> listarOrganizacion(String combo,String texto);
-    ArrayList cargarImagenes();
+    //Metodos para usuario
+    void agregarUsuario(Usuario obj);
+    void actualizar(Usuario obj1,Usuario obj2);
+    void eliminarUsuario(Usuario obj);
+    String ObtenerPassword(String comodin);
+    List<Usuario> listarUsuario();
+    Usuario obtenerUsuario(String nombreUsuario);
+    
+    //Metodos para organizacion
+    void agregarOrganizacion(String nombre, String descripcion,String rutaL,String rutaR);
+    List<Organizacion> listarOrganizacion(String texto);
+    void visualizarTabla(JTable tabla,ResultSet rs);
+    ResultSet visualizar();
+    ResultSet visualizarFiltro(String nombreOrg);
+   
+    
 }

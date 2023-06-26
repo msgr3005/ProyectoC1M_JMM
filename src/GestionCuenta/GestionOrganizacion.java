@@ -4,7 +4,7 @@
  */
 package GestionCuenta;
 
-import imagenes.ImagenAlmacen;
+
 import imagenes.RenderImagen;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -35,8 +35,8 @@ public class GestionOrganizacion extends javax.swing.JFrame {
      */
     public GestionOrganizacion() {
         initComponents();
-       
-        CargarImagenes();
+        repo.cargarImagenes();
+       // CargarImagenes();
     }
 
     /**
@@ -53,7 +53,7 @@ public class GestionOrganizacion extends javax.swing.JFrame {
         txtNombreOrg = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        descripcionOrg = new javax.swing.JTextArea();
+        txtDescripcionOrg = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         btnExaminarL = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -61,6 +61,7 @@ public class GestionOrganizacion extends javax.swing.JFrame {
         lblImagenR = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         lblImagenL = new javax.swing.JLabel();
+        txtRuta = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,9 +73,9 @@ public class GestionOrganizacion extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Sitka Small", 0, 14)); // NOI18N
         jLabel2.setText("Nombre de la Organización");
 
-        descripcionOrg.setColumns(20);
-        descripcionOrg.setRows(5);
-        jScrollPane1.setViewportView(descripcionOrg);
+        txtDescripcionOrg.setColumns(20);
+        txtDescripcionOrg.setRows(5);
+        jScrollPane1.setViewportView(txtDescripcionOrg);
 
         jLabel3.setFont(new java.awt.Font("Sitka Small", 0, 14)); // NOI18N
         jLabel3.setText("Descripción");
@@ -113,6 +114,8 @@ public class GestionOrganizacion extends javax.swing.JFrame {
         lblImagenL.setText("Logo");
         lblImagenL.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        txtRuta.setText("jLabel5");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -147,7 +150,10 @@ public class GestionOrganizacion extends javax.swing.JFrame {
                                 .addComponent(lblImagenR, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(473, 473, 473)
-                        .addComponent(btnGuardar)))
+                        .addComponent(btnGuardar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(486, 486, 486)
+                        .addComponent(txtRuta)))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -179,7 +185,9 @@ public class GestionOrganizacion extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblImagenL, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblImagenR, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(txtRuta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(btnGuardar)
                 .addGap(41, 41, 41))
         );
@@ -203,7 +211,7 @@ public class GestionOrganizacion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void CargarImagenes() {
+    /*private void CargarImagenes() {
         ArrayList Imagenes;
         ImagenAlmacen mImagenAlmacen;
         Object Datos[] = new Object[3];
@@ -232,7 +240,7 @@ public class GestionOrganizacion extends javax.swing.JFrame {
                  }
             }
         }       
-    }
+    }*/
     
     private byte[] getImagen(String Ruta) {
         File imagen = new File(Ruta);
@@ -247,7 +255,14 @@ public class GestionOrganizacion extends javax.swing.JFrame {
     }
     private void btnExaminarLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarLActionPerformed
         JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        int ap = fileChooser.showOpenDialog(this);
+        
+        if(ap == JFileChooser.APPROVE_OPTION){
+            RutaL = fileChooser.getSelectedFile().getAbsolutePath();
+            lblImagenL.setIcon(new ImageIcon(RutaL));
+            lblImagenL.setText("");
+        }
+        /*FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         fileChooser.setFileFilter(extensionFilter);
 
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -256,12 +271,21 @@ public class GestionOrganizacion extends javax.swing.JFrame {
             ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagenL.getWidth(), lblImagenL.getHeight(), 0));
             lblImagenL.setIcon(mIcono);
             lblImagenL.setText("");
-        }
+            txtRuta.setText(RutaL);
+        }*/
     }//GEN-LAST:event_btnExaminarLActionPerformed
 
     private void btnExaminarRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarRActionPerformed
         JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        
+        int ap = fileChooser.showOpenDialog(this);
+        
+        if(ap == JFileChooser.APPROVE_OPTION){
+            RutaR = fileChooser.getSelectedFile().getAbsolutePath();
+            lblImagenR.setIcon(new ImageIcon(RutaR));
+            lblImagenR.setText("");
+        }
+        /*FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         fileChooser.setFileFilter(extensionFilter);
 
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -270,18 +294,20 @@ public class GestionOrganizacion extends javax.swing.JFrame {
             ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagenR.getWidth(), lblImagenR.getHeight(), 0));
             lblImagenR.setIcon(mIcono);
             lblImagenR.setText("");
-        }
+        }*/
     }//GEN-LAST:event_btnExaminarRActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try{
-            ImagenAlmacen mImagen = new ImagenAlmacen();
-        
-            mImagen.setImagenLogo(getImagen(RutaL));
-            mImagen.setImagenReferencial(getImagen(RutaR));
-            repo.agregarImagen(mImagen);
-        
-            CargarImagenes();
+            Organizacion org = new Organizacion();
+            String nombre = txtNombreOrg.getText();
+            String descripcion = txtDescripcionOrg.getText();
+            String logo = RutaL;
+            String imgRef=RutaR;
+            org.setLogo(getImagen(RutaL));
+            org.setImagenReferencial(getImagen(RutaR));
+            repo.agregarOrganizacion(nombre,descripcion,RutaL,RutaR);
+            repo.cargarImagenes();
             JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Ocurrio un error");
@@ -327,7 +353,6 @@ public class GestionOrganizacion extends javax.swing.JFrame {
     private javax.swing.JButton btnExaminarL;
     private javax.swing.JButton btnExaminarR;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JTextArea descripcionOrg;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -336,6 +361,8 @@ public class GestionOrganizacion extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblImagenL;
     private javax.swing.JLabel lblImagenR;
+    private javax.swing.JTextArea txtDescripcionOrg;
     private javax.swing.JTextField txtNombreOrg;
+    private javax.swing.JLabel txtRuta;
     // End of variables declaration//GEN-END:variables
 }

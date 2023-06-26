@@ -10,20 +10,31 @@ package Repository;
  */
 public class Usuario {
     private int idUsuario;
-    private String username;
-    private String password;
+    private String nombre;
+    private String nombreUsuario;
+    private String contraseña;
+    private int numero;
+    private String email;
+    private String informacion;
 
-    public Usuario(int idUsuario, String username, String password) {
+    public Usuario(int idUsuario,String nombre, String nombreUsuario, String contraseña, int numero, String email, String informacion) {
         this.idUsuario = idUsuario;
-        this.username = username;
-        this.password = password;
+        this.nombre = nombre;
+        this.nombreUsuario = nombreUsuario;
+        this.contraseña = contraseña;
+        this.numero = numero;
+        this.email = email;
+        this.informacion = informacion;
     }
-    public Usuario( String username, String password) {
-        
-        this.username = username;
-        this.password = password;
+    public Usuario( String nombre,String nombreUsuario, String contraseña, int numero, String email, String informacion) {
+        this.nombre = nombre;
+        this.nombreUsuario = nombreUsuario;
+        this.contraseña = contraseña;
+        this.numero = numero;
+        this.email = email;
+        this.informacion = informacion;
     }
-
+    
     public int getIdUsuario() {
         return idUsuario;
     }
@@ -31,21 +42,52 @@ public class Usuario {
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
-
-    public String getUsername() {
-        return username;
+    public String getNombre(){
+        return nombre;
+    }
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
-    public String getPassword() {
-        return password;
+    public String getContraseña() {
+        return contraseña;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getInformacion() {
+        return informacion;
+    }
+
+    public void setInformacion(String informacion) {
+        this.informacion = informacion;
+    }
+
+   
     
 }

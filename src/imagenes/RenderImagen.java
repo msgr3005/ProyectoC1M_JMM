@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author MAURICIO
  */
 public class RenderImagen extends DefaultTableCellRenderer{
+    
     public Component getTableCellRendererComponent(JTable table,Object value,boolean isSelected,boolean hasFocus, int row, int column){
         if(value instanceof JLabel){
             JLabel lbl =(JLabel)value;
