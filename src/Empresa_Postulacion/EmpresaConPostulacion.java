@@ -3,8 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Empresa_Postulacion;
-
+import Repository.*;
 import BusquedaInterfaz.SearchListForm;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.sql.Blob;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 
 /**
  *
@@ -16,7 +22,26 @@ public class EmpresaConPostulacion extends javax.swing.JFrame {
      * Creates new form EmpresaConPostulacion
      */
     public EmpresaConPostulacion() {
+        SearchListForm slf = new SearchListForm();
+        RepositorioMySQL repo  = new RepositorioMySQL();
         initComponents();
+        txtOrg.setText(slf.nombreOrg);
+        Organizacion obj =repo.buscarOrganizacion(slf.nombreOrg);
+        txtDescripcion.setText(obj.getDescripcion());
+         
+        byte[] logoByte = obj.getLogo();
+        byte[] imgRefByte = obj.getImagenReferencial();
+        BufferedImage imgLogo= null,imgRef = null;
+        try{
+            imgLogo = ImageIO.read(new ByteArrayInputStream(logoByte));
+            imgRef = ImageIO.read(new ByteArrayInputStream(imgRefByte));
+        }catch(Exception e){
+             e.printStackTrace();
+        }
+        ImageIcon iconoLogo = new ImageIcon(imgLogo);
+        ImageIcon iconoRef = new ImageIcon(imgRef);
+        lblImagenL1.setIcon(iconoLogo);
+        lblImagenL3.setIcon(iconoRef);
     }
 
     /**
@@ -30,12 +55,13 @@ public class EmpresaConPostulacion extends javax.swing.JFrame {
 
         btnRetroceder = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtDescripcion = new javax.swing.JTextArea();
         lblImagenL = new javax.swing.JLabel();
         btnPostular = new javax.swing.JButton();
         lblImagenL1 = new javax.swing.JLabel();
         lblImagenL2 = new javax.swing.JLabel();
         lblImagenL3 = new javax.swing.JLabel();
+        txtOrg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,9 +72,9 @@ public class EmpresaConPostulacion extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtDescripcion.setColumns(20);
+        txtDescripcion.setRows(5);
+        jScrollPane1.setViewportView(txtDescripcion);
 
         lblImagenL.setFont(new java.awt.Font("Sitka Small", 1, 36)); // NOI18N
         lblImagenL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -72,6 +98,9 @@ public class EmpresaConPostulacion extends javax.swing.JFrame {
         lblImagenL3.setText("Imagen1");
         lblImagenL3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        txtOrg.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtOrg.setText("j");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,16 +110,15 @@ public class EmpresaConPostulacion extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(btnRetroceder)
+                        .addGap(249, 249, 249)
+                        .addComponent(txtOrg)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(65, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lblImagenL3, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lblImagenL1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(24, 24, 24)))
+                            .addComponent(lblImagenL3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblImagenL1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(53, 53, 53)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblImagenL, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -107,17 +135,19 @@ public class EmpresaConPostulacion extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(btnRetroceder)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnRetroceder)
+                    .addComponent(txtOrg))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(lblImagenL1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(lblImagenL1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(btnPostular, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblImagenL, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblImagenL2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,10 +204,11 @@ public class EmpresaConPostulacion extends javax.swing.JFrame {
     private javax.swing.JButton btnPostular;
     private javax.swing.JButton btnRetroceder;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblImagenL;
     private javax.swing.JLabel lblImagenL1;
     private javax.swing.JLabel lblImagenL2;
     private javax.swing.JLabel lblImagenL3;
+    private javax.swing.JTextArea txtDescripcion;
+    private javax.swing.JLabel txtOrg;
     // End of variables declaration//GEN-END:variables
 }

@@ -145,9 +145,10 @@ public class RepositorioMySQL implements Repository{
     }
 
     @Override
-    public List<Organizacion> listarOrganizacion(String texto) {
-        List<Organizacion> listaOrganizacion = new ArrayList<>();
-       String sql = "select * from tbl_organizacion where nombreOrganizacion like ?";
+    public Organizacion buscarOrganizacion(String texto) {
+        //List<Organizacion> listaOrganizacion = new ArrayList<>();
+       Organizacion objOrganizacion  = null;
+        String sql = "select * from tbl_organizacion where nombreOrganizacion like ?";
        try{
            Connection connection = DriverManager.getConnection(URL,usuario,password);
            PreparedStatement statement = connection.prepareStatement(sql);
@@ -160,14 +161,14 @@ public class RepositorioMySQL implements Repository{
                String descripcion = resultSet.getString("descripcion");
                byte[] logo = resultSet.getBytes("logo");
                byte[] imgRef = resultSet.getBytes("imagenReferencial");
-               Organizacion objOrganizacion = new Organizacion(idOrganizacion,nombre,descripcion,logo,imgRef);
-               listaOrganizacion.add(objOrganizacion);
+              objOrganizacion = new Organizacion(idOrganizacion,nombre,descripcion,logo,imgRef);
+               //listaOrganizacion.add(objOrganizacion);
            }
        }
        catch(Exception e){
            e.printStackTrace();
        }
-       return listaOrganizacion;
+       return objOrganizacion;
     }
     
 
@@ -239,6 +240,7 @@ public class RepositorioMySQL implements Repository{
         }
         return resultSet;
     }
+    
      @Override
     public ResultSet visualizarFiltro(String nombreOrg) {
         Connection con = conectar();
@@ -248,15 +250,7 @@ public class RepositorioMySQL implements Repository{
            PreparedStatement statement = con.prepareStatement(sql);
            statement.setString(1,nombreOrg);
             resultSet = statement.executeQuery();
-           /*while(resultSet.next()){
-               int idOrganizacion = resultSet.getInt("idOrganizacion");
-               String nombre = resultSet.getString("nombreOrganizacion");
-               String descripcion = resultSet.getString("descripcion");
-               byte[] logo = resultSet.getBytes("logo");
-               byte[] imgRef = resultSet.getBytes("imagenReferencial");
-               Organizacion objOrganizacion = new Organizacion(idOrganizacion,nombre,descripcion,logo,imgRef);
-               listaOrganizacion.add(objOrganizacion);
-           }*/
+           
        }
        catch(Exception e){
            e.printStackTrace();
@@ -266,8 +260,7 @@ public class RepositorioMySQL implements Repository{
 
     @Override
     public void visualizarTabla(JTable tabla, ResultSet rs) {
-        Connection con = conectar();
-        
+       
         tabla.setDefaultRenderer(Object.class, new RenderImagen());
         DefaultTableModel dt = new DefaultTableModel();
         
@@ -306,6 +299,11 @@ public class RepositorioMySQL implements Repository{
             e.printStackTrace();
         }
         
+    }
+
+    @Override
+    public void visualizarImagen(JLabel label, ResultSet rs) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
    

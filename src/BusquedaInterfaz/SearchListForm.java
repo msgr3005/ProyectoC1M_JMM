@@ -4,8 +4,13 @@
  */
 package BusquedaInterfaz;
 
+import Empresa_Postulacion.EmpresaConPostulacion;
 import GestionCuenta.InterfazVista;
 import Repository.*;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JTable;
 
 /**
  *
@@ -13,7 +18,7 @@ import Repository.*;
  */
 public class SearchListForm extends javax.swing.JFrame {
     RepositorioMySQL repo = new RepositorioMySQL();
-   
+     public static String nombreOrg = "";
     
     /**
      * Creates new form SearchListForm
@@ -22,6 +27,20 @@ public class SearchListForm extends javax.swing.JFrame {
         initComponents();
        repo.visualizarTabla(tblOrganizacion,repo.visualizar());
        setLocationRelativeTo(null);
+       tblOrganizacion.addMouseListener(new MouseAdapter(){
+           public void mousePressed(MouseEvent Mouse_evt){
+               JTable table = (JTable) Mouse_evt.getSource();
+               Point point = Mouse_evt.getPoint();
+               int row = table.rowAtPoint(point);
+               if(Mouse_evt.getClickCount()==1){
+                   nombreOrg = tblOrganizacion.getValueAt(tblOrganizacion.getSelectedRow(), 0).toString();
+                   cerrar();
+                   EmpresaConPostulacion ecp = new EmpresaConPostulacion();
+                   ecp.setVisible(true);
+                  
+               }
+           }
+       });
     }
    
     
@@ -143,8 +162,12 @@ public class SearchListForm extends javax.swing.JFrame {
             repo.visualizarTabla(tblOrganizacion,repo.visualizarFiltro(texto));
         }
         
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    public void cerrar(){
+        this.setVisible(false);
+    }
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
         InterfazVista ui = new InterfazVista();

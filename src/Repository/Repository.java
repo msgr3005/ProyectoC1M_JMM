@@ -5,6 +5,7 @@
 package Repository;
 import java.sql.*;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 
 /**
@@ -24,10 +25,11 @@ public interface Repository {
     
     //Metodos para organizacion
     void agregarOrganizacion(String nombre, String descripcion,String rutaL,String rutaR);
-    List<Organizacion> listarOrganizacion(String texto);
+    Organizacion buscarOrganizacion(String texto);
     void visualizarTabla(JTable tabla,ResultSet rs);
     ResultSet visualizar();
     ResultSet visualizarFiltro(String nombreOrg);
+    void visualizarImagen(JLabel label,ResultSet rs);
    
     
 }
