@@ -4,7 +4,6 @@
  */
 package avance;
 import Repository.*;
-import GestionCuenta.*;
 import BusquedaInterfaz.*;
 import javax.swing.JOptionPane;
 import RegistroInterfaz.*;
@@ -19,22 +18,17 @@ import java.security.NoSuchAlgorithmException;
  * @author MAURICIO
  */
 public class LoginForm extends javax.swing.JFrame {
-   int xMouse, yMouse;
+    
+    int xMouse, yMouse;
     
     RepositorioMySQL repo = new RepositorioMySQL();
-   
-    /**
-     * Creates new form LoginForm
-     */
+    Color color = new Color(238,238,238);
+    public static String nombreUsuario = "";
     public LoginForm() {
-        
         initComponents();
+        setLocationRelativeTo(null);
     }
     
-    
-
-   
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,7 +50,7 @@ public class LoginForm extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        panel = new javax.swing.JPanel();
         btnCerrar = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -91,15 +85,15 @@ public class LoginForm extends javax.swing.JFrame {
         btnSalir.setBackground(new java.awt.Color(0, 135, 180));
         btnSalir.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(255, 255, 255));
-        btnSalir.setText("SALIR>>");
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, -1, -1));
+        btnSalir.setText("<<SALIR");
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, -1, -1));
 
         txtContraseña.setBackground(new java.awt.Color(238, 238, 238));
         txtContraseña.setBorder(null);
         getContentPane().add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(252, 176, 160, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fotologin.png"))); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 390, 80, 80));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 20, 170, 160));
 
         btnRegistrar.setBackground(new java.awt.Color(0, 135, 187));
         btnRegistrar.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
@@ -110,7 +104,7 @@ public class LoginForm extends javax.swing.JFrame {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 310, -1, -1));
+        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 400, -1, -1));
 
         btnIngresar.setBackground(new java.awt.Color(0, 135, 180));
         btnIngresar.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
@@ -121,25 +115,25 @@ public class LoginForm extends javax.swing.JFrame {
                 btnIngresarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 420, -1, -1));
+        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, -1, -1));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 160, 20));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 160, 20));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/edificios.jpg"))); // NOI18N
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, 350, 480));
 
-        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+        panel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        panel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
-                jPanel1MouseDragged(evt);
+                panelMouseDragged(evt);
             }
         });
-        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        panel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jPanel1MousePressed(evt);
+                panelMousePressed(evt);
             }
         });
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCerrar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -160,9 +154,9 @@ public class LoginForm extends javax.swing.JFrame {
         });
         btnCerrar.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 40));
 
-        jPanel1.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 40));
+        panel.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 40));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 40));
+        getContentPane().add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -170,6 +164,8 @@ public class LoginForm extends javax.swing.JFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
         RegistroFormulario registroform = new RegistroFormulario();
+        /*InterfazVista interfazVista = new InterfazVista();
+        interfazVista.setLoginForm(this);*/
         this.setVisible(false);
         registroform.setVisible(true);
     }//GEN-LAST:event_btnRegistrarActionPerformed
@@ -190,10 +186,9 @@ public class LoginForm extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(this, "Inicio de sesion exitoso");
             Usuario objUsuario = repo.obtenerUsuario(user);
-            
+            nombreUsuario = user;
             this.setVisible(false);
             SearchListForm busqueda = new SearchListForm();
-           
             busqueda.setVisible(true);
 
         }else{
@@ -202,28 +197,31 @@ public class LoginForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnIngresarActionPerformed
 
-    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+    private void panelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
-    }//GEN-LAST:event_jPanel1MousePressed
+    }//GEN-LAST:event_panelMousePressed
 
-    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+    private void panelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x-xMouse,y-yMouse);
-    }//GEN-LAST:event_jPanel1MouseDragged
+        
+    }//GEN-LAST:event_panelMouseDragged
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-       System.exit(0);
+       
+        System.exit(0);
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseEntered
-        btnCerrar.setBackground(Color.red);
+         
+        btnCerrar.setBackground(Color.RED);
     }//GEN-LAST:event_jLabel6MouseEntered
 
     private void jLabel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseExited
-       
-        btnCerrar.setBackground(Color.getHSBColor(5, 0, 25));
+       btnCerrar.setBackground(color);
+        
     }//GEN-LAST:event_jLabel6MouseExited
 
     /**
@@ -272,9 +270,9 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JPanel panel;
     private javax.swing.JPasswordField txtContraseña;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables

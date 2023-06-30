@@ -16,7 +16,7 @@ public interface Repository {
     
     //Metodos para usuario
     void agregarUsuario(Usuario obj);
-    void actualizar(Usuario obj1,Usuario obj2);
+    void actualizarUsuario(Usuario obj1,Usuario obj2);
     void eliminarUsuario(Usuario obj);
     String ObtenerPassword(String comodin);
     List<Usuario> listarUsuario();

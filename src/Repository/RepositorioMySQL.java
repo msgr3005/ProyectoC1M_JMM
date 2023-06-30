@@ -53,15 +53,15 @@ public class RepositorioMySQL implements Repository{
     @Override
     public void agregarUsuario(Usuario obj) {
         
-        String sql = "insert into tbl_usuario(nombre,nombreUsuario,contraseña,numero,email,informacion) values(?,?,MD5(?),?,?,?)";
+        String sql = "insert into tbl_usuario(nombre,nombreUsuario,contraseña,numero,correo,informacion) values(?,?,MD5(?),?,?,?)";
         try{
             Connection connection = DriverManager.getConnection(URL,usuario,password);
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, obj.getNombre());
             statement.setString(2,obj.getNombreUsuario());
-            statement.setString(3,obj.getContraseña());
+            statement.setString(3,obj.getContrasena());
             statement.setInt(4, obj.getNumero());
-            statement.setString(5, obj.getEmail());
+            statement.setString(5, obj.getCorreo());
             statement.setString(6, obj.getInformacion());
             statement.executeUpdate();
         }catch(Exception e){
@@ -70,8 +70,27 @@ public class RepositorioMySQL implements Repository{
     }
 
     @Override
-    public void actualizar(Usuario obj1,Usuario obj2) {
-        
+    public void actualizarUsuario(Usuario obj1,Usuario obj2) {
+         try {
+            int idUsuario = obj1.getIdUsuario();
+            String nombre = obj2.getNombre();
+            String nombreUsuario = obj2.getNombreUsuario();
+            String contrasena = obj2.getContrasena();
+            int numero = obj2.getNumero();
+            String correo = obj2.getContrasena();
+            String informacion = obj2.getInformacion();
+ 
+            Connection connection = conectar();
+            Statement statement = connection.createStatement();
+
+            String consulta = "UPDATE tbl_usuario SET nombre = '" + nombre + "',nombreUsuario='"+nombreUsuario+"',contraseña = MD5('"+contrasena+"'), numero = '" + numero + "', correo = '" + correo + "', informacion= '" + informacion + "'WHERE idUsuario = '"+idUsuario+"'";
+            statement.executeUpdate(consulta);
+
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -196,9 +215,9 @@ public class RepositorioMySQL implements Repository{
             String nombre = resultSet.getString("nombre");
             String contrasena = resultSet.getString("contraseña");
             int numero = resultSet.getInt("numero");
-            String email = resultSet.getString("email");
+            String correo = resultSet.getString("correo");
             String informacion = resultSet.getString("informacion");
-            objUsuario = new Usuario(idUsuario,nombre,nombreUsuario,contrasena,numero,email,informacion);
+            objUsuario = new Usuario(idUsuario,nombre,nombreUsuario,contrasena,numero,correo,informacion);
             }
             return objUsuario;
            }catch(Exception e){

@@ -13,7 +13,7 @@ import Repository.*;
  */
 public class SearchListForm extends javax.swing.JFrame {
     RepositorioMySQL repo = new RepositorioMySQL();
-    Usuario objUsuario = null;
+   
     
     /**
      * Creates new form SearchListForm
@@ -21,10 +21,9 @@ public class SearchListForm extends javax.swing.JFrame {
     public SearchListForm() {
         initComponents();
        repo.visualizarTabla(tblOrganizacion,repo.visualizar());
+       setLocationRelativeTo(null);
     }
-    public void setUsuario(Usuario obj){
-        this.objUsuario = obj;
-    }
+   
     
 
     /**
@@ -129,7 +128,7 @@ public class SearchListForm extends javax.swing.JFrame {
                 jLabel1MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 670, 120, 110));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 600, 160, 180));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -149,8 +148,9 @@ public class SearchListForm extends javax.swing.JFrame {
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
         InterfazVista ui = new InterfazVista();
+       
         this.setVisible(false);
-      
+       
         ui.setVisible(true);
     }//GEN-LAST:event_jLabel1MouseClicked
 

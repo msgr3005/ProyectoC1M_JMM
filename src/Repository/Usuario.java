@@ -12,26 +12,26 @@ public class Usuario {
     private int idUsuario;
     private String nombre;
     private String nombreUsuario;
-    private String contraseña;
+    private String contrasena;
     private int numero;
-    private String email;
+    private String correo;
     private String informacion;
 
-    public Usuario(int idUsuario,String nombre, String nombreUsuario, String contraseña, int numero, String email, String informacion) {
+    public Usuario(int idUsuario,String nombre, String nombreUsuario, String contrasena, int numero, String correo, String informacion) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
         this.numero = numero;
-        this.email = email;
+        this.correo = correo;
         this.informacion = informacion;
     }
-    public Usuario( String nombre,String nombreUsuario, String contraseña, int numero, String email, String informacion) {
+    public Usuario( String nombre,String nombreUsuario, String contrasena, int numero, String correo, String informacion) {
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
         this.numero = numero;
-        this.email = email;
+        this.correo = correo;
         this.informacion = informacion;
     }
     
@@ -56,12 +56,12 @@ public class Usuario {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public int getNumero() {
@@ -72,12 +72,12 @@ public class Usuario {
         this.numero = numero;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public String getInformacion() {

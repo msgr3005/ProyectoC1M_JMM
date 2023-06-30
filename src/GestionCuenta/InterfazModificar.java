@@ -7,41 +7,47 @@ package GestionCuenta;
 
 import GestionCuenta.InterfazVista;
 import javax.swing.JOptionPane;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
+import avance.*;
+import Repository.*;
 
 /**
  *
  * @author GIAN FRANCO
  */
 public class InterfazModificar extends javax.swing.JFrame {
-    private InterfazVista interfazVista;
+    RepositorioMySQL repo = new RepositorioMySQL();
+    
+   // private InterfazVista interfazVista;
     private String nombre;
-    private String numero;
+    private String nombreUsuario;
+    private String contrasena;
+    private int numero;
     private String email;
     private String info;
-    
+     InterfazVista interfazVista = new InterfazVista();
     /**
      * Creates new form InterfazModificar
      */
-    public InterfazModificar(String nombre, String numero, String email, String info) {
+    public InterfazModificar(String nombre,String nombreUsuario,String contrasena, int numero, String email, String info) {
         initComponents();
+        
         this.nombre = nombre;
+        this.nombreUsuario = nombreUsuario;
+        this.contrasena = contrasena;
         this.numero = numero;
         this.email = email;
         this.info = info;
 
-        cargarDatos();
+  
+       setLocationRelativeTo(null);
     }
-    public void setInterfazVista(InterfazVista interfazVista) {
+    /*public void setInterfazVista(InterfazVista interfazVista) {
         this.interfazVista = interfazVista;
-    } 
+    } */
 
     public InterfazModificar() {
         initComponents();
+         setLocationRelativeTo(null);
     }
 
     /**
@@ -55,7 +61,7 @@ public class InterfazModificar extends javax.swing.JFrame {
 
         txtnombre = new javax.swing.JTextField();
         txtnumero = new javax.swing.JTextField();
-        txtemail = new javax.swing.JTextField();
+        txtCorreo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         txtinfo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -64,6 +70,12 @@ public class InterfazModificar extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        txtNombreusuario = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtNuevaContrasena = new javax.swing.JPasswordField();
+        txtCNuevaContrasena = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,9 +91,9 @@ public class InterfazModificar extends javax.swing.JFrame {
             }
         });
 
-        txtemail.addActionListener(new java.awt.event.ActionListener() {
+        txtCorreo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtemailActionPerformed(evt);
+                txtCorreoActionPerformed(evt);
             }
         });
 
@@ -98,7 +110,7 @@ public class InterfazModificar extends javax.swing.JFrame {
 
         jLabel4.setText("Habilidades e intereses");
 
-        jLabel3.setText("Email:");
+        jLabel3.setText("Correo");
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -116,69 +128,109 @@ public class InterfazModificar extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("Nombre de usuario:");
+
+        jLabel7.setText("Nueva contraseña:");
+
+        jLabel8.setText("Confirmar nueva contraseña:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtnumero, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtinfo, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jLabel4)))
-                .addGap(40, 40, 40))
+                .addGap(63, 63, 63)
+                .addComponent(btnRegresar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuardar)
+                .addGap(102, 102, 102))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombreusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(txtNuevaContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(189, 189, 189))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(39, 39, 39)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtnumero, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(203, 203, 203))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCNuevaContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(151, 151, 151)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txtinfo, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(229, 229, 229)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(154, 154, 154)
-                        .addComponent(btnGuardar)
-                        .addGap(75, 75, 75)
-                        .addComponent(btnRegresar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtinfo, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addComponent(jLabel5))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(52, 52, 52)
+                                .addComponent(jLabel4)
+                                .addGap(34, 34, 34))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(24, 24, 24)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(txtnumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                            .addComponent(txtinfo, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3)))
+                            .addComponent(jLabel6)
+                            .addComponent(txtNombreusuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(txtNuevaContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnRegresar))
-                .addGap(39, 39, 39))
+                    .addComponent(jLabel8)
+                    .addComponent(txtCNuevaContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(135, 135, 135)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegresar)
+                    .addComponent(btnGuardar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -192,9 +244,9 @@ public class InterfazModificar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnumeroActionPerformed
 
-    private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed
+    private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtemailActionPerformed
+    }//GEN-LAST:event_txtCorreoActionPerformed
 
     private void txtinfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtinfoActionPerformed
         // TODO add your handling code here:
@@ -202,13 +254,19 @@ public class InterfazModificar extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         nombre = txtnombre.getText();
-        numero = txtnumero.getText();
-        email = txtemail.getText();
+        nombreUsuario = txtNombreusuario.getText();
+        numero = Integer.parseInt(txtnumero.getText());
+        contrasena = new String(txtNuevaContrasena.getPassword());
+        email = txtCorreo.getText();
         info = txtinfo.getText();
-
-        guardarDatos();
-
-        interfazVista.actualizarDatos(nombre, numero, email, info);
+        LoginForm loginForm = new LoginForm();
+        String nombreAbuscar = loginForm.nombreUsuario;
+        Usuario nuevoUsuario = new Usuario(nombre,nombreUsuario,contrasena,numero,email,info);
+        Usuario usuarioModificar = repo.obtenerUsuario(nombreAbuscar);
+        repo.actualizarUsuario( usuarioModificar, nuevoUsuario);
+        this.setVisible(false);
+        interfazVista.actualizarDatos(nuevoUsuario);
+        interfazVista.setVisible(true);
         
         JOptionPane.showMessageDialog(this, "Guardado correctamente");
     
@@ -216,7 +274,7 @@ public class InterfazModificar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        setVisible(false);
+        this.setVisible(false);
         interfazVista.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
@@ -256,27 +314,8 @@ public class InterfazModificar extends javax.swing.JFrame {
         });
     }
     
-    private void cargarDatos() {
-        txtnombre.setText(nombre);
-        txtnumero.setText(numero);
-        txtemail.setText(email);
-        txtinfo.setText(info);
-    } 
-    private void guardarDatos() {
-        /*try {
-            ConexionBD conexion = new ConexionBD();
-            Connection connection = conexion.conectar();
-            Statement statement = connection.createStatement();
-
-            String consulta = "UPDATE info SET nombre = '" + nombre + "', numero = '" + numero + "', email = '" + email + "', inform = '" + info + "'";
-            statement.executeUpdate(consulta);
-
-            statement.close();
-            connection.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }*/
-    }
+    
+    
 
       
     
@@ -289,7 +328,13 @@ public class InterfazModificar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField txtemail;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPasswordField txtCNuevaContrasena;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtNombreusuario;
+    private javax.swing.JPasswordField txtNuevaContrasena;
     private javax.swing.JTextField txtinfo;
     private javax.swing.JTextField txtnombre;
     private javax.swing.JTextField txtnumero;

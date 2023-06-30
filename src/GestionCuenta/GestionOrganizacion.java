@@ -35,7 +35,7 @@ public class GestionOrganizacion extends javax.swing.JFrame {
      */
     public GestionOrganizacion() {
         initComponents();
-        repo.cargarImagenes();
+        
        // CargarImagenes();
     }
 
@@ -213,7 +213,7 @@ public class GestionOrganizacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     /*private void CargarImagenes() {
         ArrayList Imagenes;
-        ImagenAlmacen mImagenAlmacen;
+        Organizacion objOrganizacion;
         Object Datos[] = new Object[3];
         Imagenes = repo.cargarImagenes();
 
@@ -307,7 +307,7 @@ public class GestionOrganizacion extends javax.swing.JFrame {
             org.setLogo(getImagen(RutaL));
             org.setImagenReferencial(getImagen(RutaR));
             repo.agregarOrganizacion(nombre,descripcion,RutaL,RutaR);
-            repo.cargarImagenes();
+            
             JOptionPane.showMessageDialog(null, "Datos guardados correctamente");
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Ocurrio un error");
