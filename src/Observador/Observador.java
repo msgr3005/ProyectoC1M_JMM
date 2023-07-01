@@ -9,7 +9,7 @@ package Observador;
  * @author MAURICIO
  */
 public class Observador {
-    private Sujeto sujeto;
+   private Sujeto sujeto;
     
     public abstract void actualizar(); //corresponde a las reacciones
                         //específicas de cada observador concreto

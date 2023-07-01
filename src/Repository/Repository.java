@@ -30,6 +30,7 @@ public interface Repository {
     ResultSet visualizar();
     ResultSet visualizarFiltro(String nombreOrg);
     void visualizarImagen(JLabel label,ResultSet rs);
+    Organizacion obtenerOrganizacion(int idOrganizacion);
    
     
 }

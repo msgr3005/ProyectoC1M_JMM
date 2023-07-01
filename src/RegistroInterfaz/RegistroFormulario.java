@@ -5,20 +5,27 @@
 package RegistroInterfaz;
 import Repository.*;
 import avance.*;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 /**
  *
  * @author MAURICIO
  */
 public class RegistroFormulario extends javax.swing.JFrame {
+   int xMouse, yMouse;
+   Color color = new Color(238,238,238);
     RepositorioMySQL repo = new RepositorioMySQL();
     LoginForm loginform = new LoginForm();
     /**
      * Creates new form RegistroFormulario
      */
     public RegistroFormulario() {
+        
         initComponents();
+         setLocationRelativeTo(null);
+        
     }
+   
     
     
     /**
@@ -40,14 +47,17 @@ public class RegistroFormulario extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        txtNumero = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtInformacion = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
         txtContraseñaC = new javax.swing.JPasswordField();
+        panel = new javax.swing.JPanel();
+        btnCerrar = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
         jLabel1.setText("Nombre:");
 
@@ -66,13 +76,45 @@ public class RegistroFormulario extends javax.swing.JFrame {
 
         jLabel6.setText("Confimar contraseña");
 
-        jLabel7.setText("Número de celular");
-
         txtInformacion.setColumns(20);
         txtInformacion.setRows(5);
         jScrollPane1.setViewportView(txtInformacion);
 
         jLabel8.setText("Informacion");
+
+        panel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        panel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panelMouseDragged(evt);
+            }
+        });
+        panel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panelMousePressed(evt);
+            }
+        });
+        panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCerrar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI Historic", 1, 24)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("X");
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel9MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel9MouseExited(evt);
+            }
+        });
+        btnCerrar.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 40));
+
+        panel.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,11 +132,9 @@ public class RegistroFormulario extends javax.swing.JFrame {
                                 .addComponent(txtEmail)
                                 .addComponent(jLabel1)
                                 .addComponent(jLabel5)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-                                .addComponent(jLabel7)
-                                .addComponent(txtNumero))
+                                .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
                             .addComponent(txtContraseña, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
@@ -106,11 +146,13 @@ public class RegistroFormulario extends javax.swing.JFrame {
                                 .addComponent(btnConfirmar))
                             .addComponent(txtContraseñaC))
                         .addGap(76, 76, 76))))
+            .addComponent(panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3))
@@ -127,16 +169,12 @@ public class RegistroFormulario extends javax.swing.JFrame {
                     .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
+                .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtContraseñaC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addComponent(txtContraseñaC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                 .addComponent(jLabel8)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -154,13 +192,19 @@ public class RegistroFormulario extends javax.swing.JFrame {
         String nombreUsuario = txtNombreUsuario.getText();
         String contrasena= new String(txtContraseña.getPassword());
         String contrasenaC = new String(txtContraseñaC.getPassword());
-        int numero = Integer.parseInt(txtNumero.getText());
+        //int numero = Integer.parseInt(txtNumero.getText());
         String email = txtEmail.getText();
         String informacion = txtInformacion.getText();
         if(contrasena.equals(contrasenaC)){
-            Usuario usuario = new Usuario(nombre,nombreUsuario,contrasena,numero,email,informacion);
+            LoginForm lg = new LoginForm();
+            Usuario usuario = new Usuario(nombre,nombreUsuario,contrasena,email,informacion,lg.idTipo);
             repo.agregarUsuario(usuario);
             JOptionPane.showMessageDialog(this, "Usuario creado correctamente");
+            if(lg.idTipo == 2){
+                this.setVisible(false);
+                RegistroOrganizacion rorg = new RegistroOrganizacion();
+                rorg.setVisible(true);
+            }
             this.setVisible(false);
             loginform.setVisible(true);
         }
@@ -170,6 +214,33 @@ public class RegistroFormulario extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnConfirmarActionPerformed
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+
+        System.exit(0);
+    }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void jLabel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseEntered
+
+        btnCerrar.setBackground(Color.RED);
+    }//GEN-LAST:event_jLabel9MouseEntered
+
+    private void jLabel9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseExited
+        btnCerrar.setBackground(color);
+
+    }//GEN-LAST:event_jLabel9MouseExited
+
+    private void panelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x-xMouse,y-yMouse);
+
+    }//GEN-LAST:event_panelMouseDragged
+
+    private void panelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_panelMousePressed
 
     /**
      * @param args the command line arguments
@@ -207,21 +278,22 @@ public class RegistroFormulario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel btnCerrar;
     private javax.swing.JButton btnConfirmar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panel;
     private javax.swing.JPasswordField txtContraseña;
     private javax.swing.JPasswordField txtContraseñaC;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextArea txtInformacion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombreUsuario;
-    private javax.swing.JTextField txtNumero;
     // End of variables declaration//GEN-END:variables
 }

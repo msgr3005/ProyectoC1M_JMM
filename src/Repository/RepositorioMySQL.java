@@ -53,16 +53,18 @@ public class RepositorioMySQL implements Repository{
     @Override
     public void agregarUsuario(Usuario obj) {
         
-        String sql = "insert into tbl_usuario(nombre,nombreUsuario,contraseña,numero,correo,informacion) values(?,?,MD5(?),?,?,?)";
+        String sql = "insert into tbl_usuario(nombre,nombreUsuario,contraseña,correo,informacion,idTipo) values(?,?,MD5(?),?,?,?)";
         try{
             Connection connection = DriverManager.getConnection(URL,usuario,password);
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, obj.getNombre());
             statement.setString(2,obj.getNombreUsuario());
             statement.setString(3,obj.getContrasena());
-            statement.setInt(4, obj.getNumero());
-            statement.setString(5, obj.getCorreo());
-            statement.setString(6, obj.getInformacion());
+            //statement.setInt(4, obj.getNumero());
+            statement.setString(4, obj.getCorreo());
+            statement.setString(5, obj.getInformacion());
+            statement.setInt(6, obj.getIdTipo());
+         
             statement.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();
@@ -76,14 +78,14 @@ public class RepositorioMySQL implements Repository{
             String nombre = obj2.getNombre();
             String nombreUsuario = obj2.getNombreUsuario();
             String contrasena = obj2.getContrasena();
-            int numero = obj2.getNumero();
             String correo = obj2.getContrasena();
             String informacion = obj2.getInformacion();
+            
  
             Connection connection = conectar();
             Statement statement = connection.createStatement();
 
-            String consulta = "UPDATE tbl_usuario SET nombre = '" + nombre + "',nombreUsuario='"+nombreUsuario+"',contraseña = MD5('"+contrasena+"'), numero = '" + numero + "', correo = '" + correo + "', informacion= '" + informacion + "'WHERE idUsuario = '"+idUsuario+"'";
+            String consulta = "UPDATE tbl_usuario SET nombre = '" + nombre + "',nombreUsuario='"+nombreUsuario+"',contraseña = MD5('"+contrasena+"'), correo = '" + correo + "', informacion= '" + informacion + "'WHERE idUsuario = '"+idUsuario+"'";
             statement.executeUpdate(consulta);
 
             statement.close();
@@ -111,10 +113,12 @@ public class RepositorioMySQL implements Repository{
                String nombre = resultSet.getString("nombre");
                String nombreUsuario = resultSet.getString("nombreUsuario");
                String contraseña = resultSet.getString("contraseña");
-               int numero = resultSet.getInt("numero");
+               //int numero = resultSet.getInt("numero");
                String email = resultSet.getString("email");
                String informacion = resultSet.getString("informacion");
-               Usuario objUsuario = new Usuario(idUsuario,nombre,nombreUsuario,contraseña,numero,email,informacion);
+               int idTipo = resultSet.getInt("idTipo");
+               int idOrganizacion = resultSet.getInt("idOrganizacion");
+               Usuario objUsuario = new Usuario(idUsuario,nombre,nombreUsuario,contraseña,email,informacion,idTipo,idOrganizacion);
                listaUsuario.add(objUsuario);
            }
        }
@@ -146,7 +150,7 @@ public class RepositorioMySQL implements Repository{
 
     @Override
     public Organizacion buscarOrganizacion(String texto) {
-        //List<Organizacion> listaOrganizacion = new ArrayList<>();
+      
        Organizacion objOrganizacion  = null;
         String sql = "select * from tbl_organizacion where nombreOrganizacion like ?";
        try{
@@ -215,10 +219,12 @@ public class RepositorioMySQL implements Repository{
             int idUsuario = resultSet.getInt("idUsuario");
             String nombre = resultSet.getString("nombre");
             String contrasena = resultSet.getString("contraseña");
-            int numero = resultSet.getInt("numero");
+            //int numero = resultSet.getInt("numero");
             String correo = resultSet.getString("correo");
             String informacion = resultSet.getString("informacion");
-            objUsuario = new Usuario(idUsuario,nombre,nombreUsuario,contrasena,numero,correo,informacion);
+            int idTipo = resultSet.getInt("idTipo");
+            int idOrganizacion = resultSet.getInt("idOrganizacion");
+            objUsuario = new Usuario(idUsuario,nombre,nombreUsuario,contrasena,correo,informacion,idTipo,idOrganizacion);
             }
             return objUsuario;
            }catch(Exception e){
@@ -304,6 +310,35 @@ public class RepositorioMySQL implements Repository{
     @Override
     public void visualizarImagen(JLabel label, ResultSet rs) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Organizacion obtenerOrganizacion(int idOrganizacion) {
+       Organizacion objOrganizacion=  null;
+       String sql = "select * from tbl_organizacion where idOrganizacion = ?";
+       try{
+            Connection connection = DriverManager.getConnection(URL,usuario,password);
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,idOrganizacion);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+            //int idUsuario = resultSet.getInt("idUsuario");
+            String nombreOrganizacion = resultSet.getString("nombreOrganizacion");
+            String descripcion = resultSet.getString("descripcion");
+            //int numero = resultSet.getInt("numero");
+            Blob blobLogo = resultSet.getBlob("logo");
+            Blob blobRef = resultSet.getBlob("imagenReferencial");
+            byte[] logoByte = blobLogo.getBytes(1, (int)blobLogo.length());
+            byte[] imgRefByte = blobRef.getBytes(1, (int)blobRef.length());
+            //int idTipo = resultSet.getInt("idTipo");
+            //int idOrganizacion = resultSet.getInt("idOrganizacion");
+            objOrganizacion = new Organizacion(idOrganizacion,nombreOrganizacion,descripcion,logoByte,imgRefByte);
+            }
+            return objOrganizacion;
+           }catch(Exception e){
+               e.printStackTrace();
+               return null;
+       }
     }
 
    

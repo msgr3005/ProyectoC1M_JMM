@@ -5,6 +5,7 @@
 package avance;
 import Repository.*;
 import BusquedaInterfaz.*;
+import GestionCuenta.VistaOrganizacion;
 import javax.swing.JOptionPane;
 import RegistroInterfaz.*;
 import java.awt.Color;
@@ -20,15 +21,16 @@ import java.security.NoSuchAlgorithmException;
 public class LoginForm extends javax.swing.JFrame {
     
     int xMouse, yMouse;
-    
-    RepositorioMySQL repo = new RepositorioMySQL();
     Color color = new Color(238,238,238);
-    public static String nombreUsuario = "";
+    RepositorioMySQL repo = new RepositorioMySQL();
+    
+    
     public LoginForm() {
         initComponents();
         setLocationRelativeTo(null);
     }
-    
+    public static String nombreUsuario = "";
+    public static int idTipo = 1;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,6 +55,7 @@ public class LoginForm extends javax.swing.JFrame {
         panel = new javax.swing.JPanel();
         btnCerrar = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        btnRegistroOrg = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -86,7 +89,7 @@ public class LoginForm extends javax.swing.JFrame {
         btnSalir.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(255, 255, 255));
         btnSalir.setText("<<SALIR");
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, -1, -1));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
 
         txtContraseña.setBackground(new java.awt.Color(238, 238, 238));
         txtContraseña.setBorder(null);
@@ -104,7 +107,7 @@ public class LoginForm extends javax.swing.JFrame {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 400, -1, -1));
+        getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, -1, -1));
 
         btnIngresar.setBackground(new java.awt.Color(0, 135, 180));
         btnIngresar.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
@@ -115,7 +118,7 @@ public class LoginForm extends javax.swing.JFrame {
                 btnIngresarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, -1, -1));
+        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, -1, -1));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 160, 20));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 160, 20));
 
@@ -158,14 +161,23 @@ public class LoginForm extends javax.swing.JFrame {
 
         getContentPane().add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 40));
 
+        btnRegistroOrg.setBackground(new java.awt.Color(0, 135, 187));
+        btnRegistroOrg.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        btnRegistroOrg.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistroOrg.setText("REGISTRAR ORGANIZACION>>");
+        btnRegistroOrg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistroOrgActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRegistroOrg, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 410, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
         RegistroFormulario registroform = new RegistroFormulario();
-        /*InterfazVista interfazVista = new InterfazVista();
-        interfazVista.setLoginForm(this);*/
         this.setVisible(false);
         registroform.setVisible(true);
     }//GEN-LAST:event_btnRegistrarActionPerformed
@@ -187,10 +199,16 @@ public class LoginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Inicio de sesion exitoso");
             Usuario objUsuario = repo.obtenerUsuario(user);
             nombreUsuario = user;
+            if(objUsuario.getIdTipo()==2){
+                this.setVisible(false);
+                VistaOrganizacion vorg = new VistaOrganizacion();
+                vorg.setVisible(true);
+            }
+            else{
             this.setVisible(false);
             SearchListForm busqueda = new SearchListForm();
             busqueda.setVisible(true);
-
+            }
         }else{
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecto");
         }
@@ -223,6 +241,13 @@ public class LoginForm extends javax.swing.JFrame {
        btnCerrar.setBackground(color);
         
     }//GEN-LAST:event_jLabel6MouseExited
+
+    private void btnRegistroOrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroOrgActionPerformed
+        idTipo = 2;
+        RegistroFormulario registroform = new RegistroFormulario();
+        this.setVisible(false);
+        registroform.setVisible(true);
+    }//GEN-LAST:event_btnRegistroOrgActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,6 +288,7 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JPanel btnCerrar;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JButton btnRegistroOrg;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

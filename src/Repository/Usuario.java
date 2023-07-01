@@ -13,26 +13,41 @@ public class Usuario {
     private String nombre;
     private String nombreUsuario;
     private String contrasena;
-    private int numero;
+   // private int numero;
     private String correo;
     private String informacion;
+    private int idTipo;
+    private int idOrganizacion;
 
-    public Usuario(int idUsuario,String nombre, String nombreUsuario, String contrasena, int numero, String correo, String informacion) {
+    public Usuario(int idUsuario,String nombre, String nombreUsuario, String contrasena/*, int numero*/, String correo, String informacion,int idTipo, int idOrganizazcion) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
-        this.numero = numero;
+       // this.numero = numero;
         this.correo = correo;
         this.informacion = informacion;
+        this.idTipo = idTipo;
+        this.idOrganizacion = idOrganizacion;
     }
-    public Usuario( String nombre,String nombreUsuario, String contrasena, int numero, String correo, String informacion) {
+    public Usuario( String nombre,String nombreUsuario, String contrasena/*, int numero*/, String correo, String informacion,int idTipo,int idOrganizacion) {
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
-        this.numero = numero;
+        //this.numero = numero;
         this.correo = correo;
         this.informacion = informacion;
+        this.idTipo = idTipo;
+        this.idOrganizacion = idOrganizacion;
+    }
+    public Usuario( String nombre,String nombreUsuario, String contrasena/*, int numero*/, String correo, String informacion,int idTipo) {
+        this.nombre = nombre;
+        this.nombreUsuario = nombreUsuario;
+        this.contrasena = contrasena;
+        //this.numero = numero;
+        this.correo = correo;
+        this.informacion = informacion;
+        this.idTipo = idTipo;
     }
     
     public int getIdUsuario() {
@@ -64,13 +79,13 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
-    public int getNumero() {
+   /* public int getNumero() {
         return numero;
     }
 
     public void setNumero(int numero) {
         this.numero = numero;
-    }
+    }*/
 
     public String getCorreo() {
         return correo;
@@ -87,7 +102,20 @@ public class Usuario {
     public void setInformacion(String informacion) {
         this.informacion = informacion;
     }
+    public void setIdTipo(int idTipo){
+        this.idTipo = idTipo;
+    }
+    public int getIdTipo(){
+        return this.idTipo;
+    }
 
+    public int getIdOrganizacion() {
+        return idOrganizacion;
+    }
+
+    public void setIdOrganizacion(int idOrganizacion) {
+        this.idOrganizacion = idOrganizacion;
+    }
    
     
 }
