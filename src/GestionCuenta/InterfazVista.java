@@ -294,7 +294,14 @@ public class InterfazVista extends javax.swing.JFrame {
             txtNombre.setText(obj.getNombre());
             txtNombreusuario.setText(obj.getNombreUsuario());
             int idOrganizacion = obj.getIdOrganizacion();
-            txtOrganizacion.setText(String.valueOf(repo.obtenerOrganizacion(idOrganizacion).getNombreOrganizacion()));
+            if(repo.obtenerOrganizacion(idOrganizacion) != null){
+                 txtOrganizacion.setText(String.valueOf(repo.obtenerOrganizacion(idOrganizacion).getNombreOrganizacion()));
+        
+             }
+            else{
+                txtOrganizacion.setText("no esta en una organizacion");
+            }
+           
             txtCorreo.setText(obj.getCorreo());
             txtInformacion.setText(obj.getInformacion());
             
